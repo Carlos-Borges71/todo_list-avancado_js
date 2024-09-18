@@ -154,6 +154,7 @@ document.addEventListener("click", (e) => {
 
     if (targetEl.classList.contains("remove-todo")) {
         parentEl.remove();
+
         removeTodoLocalStore(todoTitle);
     }
 
@@ -225,7 +226,7 @@ const loadTodo = () => {
     const todos = getTodosLocalStorage();
 
     todos.forEach((todo) => {
-        saveTodo(todo.txt, todo.done, 0);
+        saveTodo(todo.text, todo.done, 0);
     });
 };
 
@@ -240,7 +241,9 @@ const saveTodoLocalStorage = (todo) => {
 
 const removeTodoLocalStore = (todoText) => {
     const todos = getTodosLocalStorage();
-    const filteredtodos = todos.filter((todo) => todo.text !== todoText);
+    const filteredTodos = todos.filter((todo) => todo.text !== todoText);
+
+    localStorage.setItem("todos", JSON.stringify(filteredTodos));
 };
 
 const updateTodoStatusLocalStorage = (todoText) => {
@@ -257,7 +260,7 @@ const updateTodoLocalStorage = (todoOldText, todoNewText) => {
     const todos = getTodosLocalStorage();
 
     todos.map((todo) => 
-        todo.text === todoOldText ? (todo.text = !todoNewText) : null
+        todo.text === todoOldText ? (todo.text = todoNewText) : null
 );
 
 localStorage.setItem("todos", JSON.stringify(todos));
